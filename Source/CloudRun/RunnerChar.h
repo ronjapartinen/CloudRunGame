@@ -17,7 +17,6 @@ class CLOUDRUN_API ARunnerChar : public ACharacter
 
 	UPROPERTY(VisibleAnywhere)
 	class UCameraComponent* SideViewCam;
-
 	
 
 public:
@@ -69,14 +68,6 @@ public:
 
 		UFUNCTION(BlueprintCallable)
 		void RemoveWidgets();
-
-		/**
-		UPROPERTY(EditAnywhere)
-		TSubclassOf<UUserWidget> HealthWidgetClass;
-
-		UPROPERTY(BlueprintReadWrite)
-		UUserWidget* HealthWidget;
-		**/
 
 		UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget> HealthWidgetClass;

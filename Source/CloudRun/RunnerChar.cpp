@@ -110,7 +110,6 @@ void ARunnerChar::Tick(float DeltaTime)
 		TempPos.Z = ZPos;
 		SideViewCam->SetWorldLocation(TempPos);
 	}
-
 	
 
 	Time = PointComponent->PassedTime;
@@ -143,8 +142,7 @@ void ARunnerChar::Tick(float DeltaTime)
 
 	if (GetActorLocation().Z < 0) {
 		OnDie();
-	}
-		
+	}	
 
 }
 
@@ -156,7 +154,6 @@ void ARunnerChar::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ARunnerChar::StopJumping);
 
 	PlayerInputComponent->BindAxis("MoveRight", this, &ARunnerChar::MoveRight);
-
 }
 
 void ARunnerChar::MoveRight(float value)
@@ -164,10 +161,10 @@ void ARunnerChar::MoveRight(float value)
 	if (CanMove) {
 	
 		if (!HitByLightning) {
-			AddMovementInput(FVector(0, 0.7, 0), value);
+			AddMovementInput(FVector(0, 1, 0), value);
 		}
 		else {
-			AddMovementInput(FVector(0, 0.7, 0), value/2);
+			AddMovementInput(FVector(0, 1, 0), value/2);
 		}
 	}
 }
@@ -263,10 +260,5 @@ void ARunnerChar::RemoveWidgets()
 		ProcessEvent(Function, nullptr);
 	}
 }
-/**
-void ARunnerChar::BeginDestroy()
-{
-	HealthWBP->RemoveFromParent();
-}
-**/
+
 

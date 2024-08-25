@@ -21,7 +21,7 @@ public:
 	void SetLevelText(int CurrentLevel);
 
 	UFUNCTION()
-	void SetLevelButtons();
+	void SetLevelButtons(int CurrentLevel);
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UButton* Level1Button;
@@ -40,8 +40,6 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidget))
 	UTextBlock* LevelText;
-
-
 
 	UPROPERTY(BlueprintReadWrite)
 	ACloudRunGameMode* GameMode;

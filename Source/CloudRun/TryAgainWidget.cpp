@@ -26,7 +26,6 @@ UTryAgainWidget::UTryAgainWidget(const FObjectInitializer& ObjectInitializer) : 
 
 void UTryAgainWidget::ToMenuOnClick()
 {
-	//this->RemoveFromParent();
 	GameMode->SetUpMenuBack();
 	UE_LOG(LogTemp, Warning, TEXT("ToMenu Pressed"));
 }
@@ -34,7 +33,6 @@ void UTryAgainWidget::ToMenuOnClick()
 void UTryAgainWidget::ToGameOnClick()
 {
 	UE_LOG(LogTemp, Warning, TEXT("ToGame Pressed"));
-	//this->RemoveFromParent();
 	UGameplayStatics::OpenLevel(this, FName(*GetWorld()->GetName()));
 	GameMode->SpawnActors();
 	GameMode->LoadLevel();

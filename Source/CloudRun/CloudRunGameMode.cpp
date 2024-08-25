@@ -17,17 +17,9 @@
 
 ACloudRunGameMode::ACloudRunGameMode()
 {
-	static ConstructorHelpers::FClassFinder<APawn> PlayerPawnBPClass(TEXT("/Game/ThirdPerson/Blueprints/BP_RunnerChar"));
-	if (PlayerPawnBPClass.Class != NULL)
-	{
-		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}
-	
 	FinalTime = 0;
 	CurrentLevel = 1;
-	Playing = false;
 	LevelSpawnRotation = FRotator(0, 90, 0);
-
 }
 
 void ACloudRunGameMode::BeginPlay()
@@ -37,7 +29,7 @@ void ACloudRunGameMode::BeginPlay()
 	if (IsLoaded) {
 		return;
 	}
-	TryAgainWidget = Cast<UTryAgainWidget>(CreateWidget(GetWorld(), TryAgainWidgetClass));
+
 	IsLoaded = true;
 	Controller = GetWorld()->GetFirstPlayerController();
 	FInputModeGameAndUI InputMode;
@@ -53,9 +45,6 @@ void ACloudRunGameMode::BeginPlay()
 		if (MyWidget != nullptr) {
 			MyWidget->AddToViewport();
 		}
-	
-	
-
 }
 
 void ACloudRunGameMode::SpawnActors()
@@ -70,8 +59,6 @@ void ACloudRunGameMode::SpawnActors()
 	Controller->Possess(SpawnedPlayer);
 
 	SpawnedStorm = GetWorld()->SpawnActor<AStorm>(StormClass, StormLocation, StormRotation, StormSpawnParameters);
-	
-	DefaultPawnClass = PlayerClass;
 
 	HealthWidget = SpawnedPlayer->HealthWidget;
 }
@@ -94,9 +81,7 @@ void ACloudRunGameMode::LoadLevel()
 
 void ACloudRunGameMode::LevelComplete()
 {
-	
-	//UGameplayStatics::SetGamePaused(GetWorld(), true);
-	
+	SpawnedStorm->SetActorTickEnabled(false);
 	FinalTime = SpawnedPlayer->Time;
 	CurrentLevel++;
 	FTimerHandle PlayerTimer = SpawnedPlayer->MyTimerHandle;
@@ -105,28 +90,14 @@ void ACloudRunGameMode::LevelComplete()
 	FString CompleteText = ("Level complete with time of " + TimeText);
 	HealthWidget->LevelCompleteText->SetText(FText::FromString(CompleteText));
 	HealthWidget->LevelCompleteText->SetVisibility(ESlateVisibility::Visible);
-	if (CurrentLevel == 2) {
-		MyWidget->Level2Button->SetBackgroundColor(FLinearColor(0, 1, 0, 1));
-	}
-	else if (CurrentLevel == 3) {
-		MyWidget->Level3Button->SetBackgroundColor(FLinearColor(0, 1, 0, 1));
-	}
+	MyWidget->SetLevelButtons(CurrentLevel);
 	FTimerHandle EndingTimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(EndingTimerHandle, this, &ACloudRunGameMode::SetUpMenuBack, 5, false);
-
 
 }
 
 void ACloudRunGameMode::Died()
 {
-	/**
-	FString GameOverText = ("You failed!");
-	HealthWidget->LevelCompleteText->SetText(FText::FromString(GameOverText));
-	HealthWidget->LevelCompleteText->SetVisibility(ESlateVisibility::Visible);
-	FTimerHandle EndingTimerHandle;
-	GetWorld()->GetTimerManager().SetTimer(EndingTimerHandle, this, &ACloudRunGameMode::SetUpMenuBack, 5, false);
-	**/
-
 	if (SpawnedPlayer)
 	{
 		SpawnedPlayer->RemoveWidgets();
@@ -149,7 +120,6 @@ void ACloudRunGameMode::Died()
 
 void ACloudRunGameMode::SetUpMenuBack()
 {
-
 
 	RemoveLevel();
 	
@@ -186,7 +156,4 @@ void ACloudRunGameMode::RemoveLevel()
 	}
 }
 
-void ACloudRunGameMode::SetPlaying()
-{
-	Playing = true;
-}
+

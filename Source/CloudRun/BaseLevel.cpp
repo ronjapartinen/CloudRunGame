@@ -9,9 +9,6 @@
 ABaseLevel::ABaseLevel()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
-	
-	
 }
 
 
@@ -34,7 +31,6 @@ void ABaseLevel::BeginPlay()
 void ABaseLevel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 UBoxComponent* ABaseLevel::GetTrigger()
@@ -55,9 +51,7 @@ void ABaseLevel::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 		if (ACharacter* OverlappingCharacter = Cast<ACharacter>(OtherActor))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Player has entered the trigger!"));
-			GameMode->LevelComplete();
-		//	FTimerHandle EndingTimerHandle;
-		//	GetWorld()->GetTimerManager().SetTimer(EndingTimerHandle, this, &ABaseLevel::GetLevelComplete, 5, false);		
+			GameMode->LevelComplete();	
 		}
 	}
 	
@@ -65,7 +59,6 @@ void ABaseLevel::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Oth
 
 void ABaseLevel::GetLevelComplete()
 {
-	
 	GameMode->LevelComplete();
 }
 

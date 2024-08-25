@@ -35,11 +35,11 @@ public:
 	UFUNCTION()
 	void RemoveLevel();
 
-	UFUNCTION(BlueprintCallable)
-	void SetPlaying();
-
 	UPROPERTY(BlueprintReadWrite)
-	bool Playing;
+	int CurrentLevel;
+	
+
+protected:
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> WidgetClass;
@@ -50,23 +50,13 @@ public:
 	UPROPERTY(VisibleInstanceOnly)
 	UHealthWidget* HealthWidget;
 
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<UUserWidget> TryAgainWidgetClass;
-
-	UPROPERTY(VisibleInstanceOnly)
-	UTryAgainWidget* TryAgainWidget;
-
 	UPROPERTY()
 	ARunnerChar* SpawnedPlayer;
 
 	UPROPERTY()
 	AStorm* SpawnedStorm;
 
-	UPROPERTY(BlueprintReadWrite)
-	int CurrentLevel;
-
 	bool IsLoaded = false;
-
 
 	ABaseLevel* MyLevel = nullptr;
 
@@ -82,14 +72,6 @@ public:
 	FVector LevelSpawnLocation = FVector();
 	FRotator LevelSpawnRotation = FRotator();
 	FActorSpawnParameters SpawnInfo = FActorSpawnParameters();
-
-	UPROPERTY(EditAnywhere)
-	TSubclassOf<ACharacter> RunnerClass;
-	
-	float FinalTime;
-	
-
-private:
 
 	UPROPERTY(EditAnywhere, Category = "Spawning")
 	TSubclassOf<ACharacter> PlayerClass;
@@ -107,6 +89,8 @@ private:
 	FRotator StormRotation = FRotator();
 	FActorSpawnParameters StormSpawnParameters{};
 
+
+	float FinalTime;
 };
 
 

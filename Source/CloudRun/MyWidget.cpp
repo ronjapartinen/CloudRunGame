@@ -23,16 +23,20 @@ void UMyWidget::SetLevelText(int CurrentLevel)
 	}
 }
 
-void UMyWidget::SetLevelButtons()
+void UMyWidget::SetLevelButtons(int CurrentLevel)
 {
+	if (CurrentLevel == 2) {
+		Level2Button->SetBackgroundColor(FLinearColor(0, 1, 0, 1));
+	}
+	else if (CurrentLevel == 3) {
+		Level3Button->SetBackgroundColor(FLinearColor(0, 1, 0, 1));
+	}
 }
 
 void UMyWidget::PlayButtonOnClick()
 {
-
 	this->SetVisibility(ESlateVisibility::Hidden);
 	UE_LOG(LogTemp, Warning, TEXT("clicked"));
-	GameMode->Playing = true;
 	GameMode->SpawnActors();
 	GameMode->LoadLevel();
 }
